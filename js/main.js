@@ -6,17 +6,21 @@ $(document).ready(function(){
 	
 	$("a[rel=tooltip]").tooltip();
 	$(".carousel").carousel();
+	$('body').on('slide', function() {
+		var current = $('.circles span.active');
+		current.removeClass('active');
+	});
 	$('body').on('slid', function() {
 		var current = $('.circles span.active');
 		var slide = $(".carousel .item.active").index();
 		var next = $('.circles span').eq(slide);
-		current.removeClass('active');
 		next.addClass('active');
 	});
 	
 	$('.circles span').click(function() {
 		var x = $(this).index();
 		$(".carousel").carousel(x);
+		$(this).addClass('active');
 	});	
 	
 	$(".product img").hover(
