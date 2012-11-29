@@ -12,25 +12,26 @@ body {
 .app {
 	margin:0 auto;
 	.header {
-		margin:40px 0 30px;
+		margin:50px 0 35px;
 		position:relative;
 		.title {
 			text-transform:uppercase;
 			a {
 				float:left;
-				margin:-1px 20px 0 0;
+				margin:0 20px 0 0;
 			}
 			h1 {
 				font-weight:300;
 				color:#232323;
 				font-size:38px;
 				margin-bottom:0;
+				margin-top:10px;
 			}
 			h3 {
 				font-weight:200;
 				color:#4d4d4d;
 				font-size:22px;
-				margin-top:1px;
+				margin-top:2px;
 			}
 		}
 		.social {
@@ -79,16 +80,35 @@ body {
 		}
 	}
 	.slides {
-		margin:20px 0 40px;
+		margin:30px 0 40px;
 		.item {
 			img {
 				width:100%;
 				max-height:450px;
 			}
 		}
+		.circles {
+			width: 66px;
+			margin: 0 auto;
+			span {
+				border:1px solid #3a3a3a;
+				height: 12px;
+				width: 12px;
+				float:left;
+				margin-right:8px;
+				@include border-radius(12px);
+				&.active {
+					background:#cdcdcd;
+				}
+				&:hover {
+					cursor:pointer;
+					background:#e5e5e5;
+				}
+			}
+		}
 	}
 	.products {
-		margin:50px 0 60px;
+		margin:85px 0 75px;
 		.product {
 			img {
 				text-align:center;
@@ -173,6 +193,16 @@ body {
 	}
 }
 
+.loading {
+	position:absolute;
+	top:26%;
+	left:45%;
+	text-align:center;
+	p {
+		margin-top:15px;
+	}
+}
+
 .tooltip {
 	font-family:'Helvetica','Arial',sans-serif;
 	letter-spacing:0;
@@ -182,6 +212,10 @@ body {
 	.tooltip-arrow {
 		border-bottom-color:#1e1e1e;
 	}
+}
+
+.under {
+	text-decoration:underline;
 }
 
 //responsive
@@ -206,10 +240,13 @@ body {
 	
 	.app {
 		width:100%;
-		.header {
-			.social {
-				bottom:-10px;
+		.header .title {
+			h3 {
+				font-size:14px;
 			}
+		}
+		.header .social {
+			bottom:-30px;
 		}
 	}
 	
@@ -219,6 +256,14 @@ body {
 	
 	.app {
 		width:100%;
+		.header .title {
+			h3 {
+				display:none;
+			}
+		}
+		.header .social {
+			bottom:-30px;
+		}
 	}
 	
 }
