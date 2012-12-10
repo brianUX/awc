@@ -1,8 +1,6 @@
 $(document).ready(function(){
 	
-	$('.loading p').fadeIn(1200);
-	
-	setTimeout(start,1600);
+	start();
 	
 	$("a[rel=tooltip]").tooltip();
 	$(".carousel").carousel();
