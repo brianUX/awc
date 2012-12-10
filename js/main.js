@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	
-	start();
+	$('.loading').hide();
+	$('.app').fadeIn(150);
 	
 	$("a[rel=tooltip]").tooltip();
 	$(".carousel").carousel();
@@ -34,9 +35,5 @@ $(document).ready(function(){
 	
 });
 
-var start = function() {
-	$(".loading").fadeOut(450, function(){
-		$('.app').fadeIn(450)
-	})
-}
+
 
