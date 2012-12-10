@@ -150,7 +150,7 @@ body {
 		}
 		.info {
 			padding-top:5px;
-			padding-left:50px;
+			//padding-left:50px;
 			position:relative;
 			a {
 				color:#666;
@@ -158,7 +158,7 @@ body {
 			.social {
 				min-width:117px;
 				position: absolute;
-				left: 46px;
+				left: -4px;
 				bottom:-30px;
 				a {
 					border:1px solid #3a3a3a;
@@ -220,10 +220,18 @@ body {
 
 //responsive
 
-@media (min-width: 1200px) { 
+@media (min-width: 1201px) { 
 	
 	.app {
-		width:1160px;
+		width:1040px;
+	}
+	
+}
+
+@media (min-width: 980px) and (max-width: 1200px) { 
+	
+	.app {
+		width:900px;
 	}
 	
 }
@@ -231,7 +239,7 @@ body {
 @media (min-width: 768px) and (max-width: 979px) { 
 	
 	.app {
-		width:96%;
+		width:90%;
 	}
 	
 }
@@ -239,14 +247,39 @@ body {
 @media (max-width: 767px) { 
 	
 	.app {
-		width:100%;
+		width:99%;
 		.header .title {
+			a {
+				margin-top:-12px;
+			}
+			h1 {
+				font-size:32px;
+			}
 			h3 {
-				font-size:14px;
+				font-size:18px;
 			}
 		}
 		.header .social {
 			bottom:-30px;
+		}
+		.slides {
+			margin-top:15px;
+		}
+		.products {
+			margin:40px 0 15px;
+			.product {
+				margin: 0 auto 50px;
+				width: 365px;
+			}
+		}
+		.footer {
+			.info {
+				padding-left:5px;
+				.social {
+					left: 0px;
+					bottom: -55px;
+				}
+			}
 		}
 	}
 	
@@ -257,12 +290,42 @@ body {
 	.app {
 		width:100%;
 		.header .title {
+			a {
+				margin-top:-12px;
+			}
+			h1 {
+				font-size:36px;
+			}
 			h3 {
 				display:none;
 			}
 		}
 		.header .social {
-			bottom:-30px;
+			bottom:-76px;
+		}
+		.menu {
+			.nav a {
+				font-size:15px;
+			}
+		}
+		.slides {
+			margin-top:15px;
+		}
+		.products {
+			margin:40px 0 15px;
+			.product {
+				margin: 0 auto 50px;
+				width: 365px;
+			}
+		}
+		.footer {
+			.info {
+				padding-left:5px;
+				.social {
+					left: 0px;
+					bottom: -55px;
+				}
+			}
 		}
 	}
 	
