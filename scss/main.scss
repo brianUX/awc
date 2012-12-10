@@ -76,6 +76,9 @@ body {
 					text-decoration:underline;
 					color:#000;
 				}
+				&.active {
+					font-weight:700;
+				}
 			}
 		}
 	}
@@ -122,6 +125,14 @@ body {
 					font-size:21px;
 				}
 			}
+		}
+	}
+	.content {
+		margin:20px 0 70px;
+		padding:0 10px;
+		h1 {
+			margin:30px 0 22px;
+			font-size:30px;
 		}
 	}
 	.footer {
@@ -223,7 +234,7 @@ body {
 @media (min-width: 1201px) { 
 	
 	.app {
-		width:1040px;
+		width:1000px;
 	}
 	
 }
@@ -307,7 +318,7 @@ body {
 			}
 		}
 		.header .social {
-			bottom:-76px;
+			display:none;
 		}
 		.menu {
 			.nav a {
