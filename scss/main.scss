@@ -19,6 +19,10 @@ body {
 			a {
 				float:left;
 				margin:0 20px 0 0;
+				&:active {
+					position:relative;
+					top:1px;
+				}
 			}
 			h1 {
 				font-weight:300;
@@ -87,6 +91,9 @@ body {
 			position: relative;
 			top: 20px;
 			left: 10px;
+			&:active {
+				top:21px;
+			}
 		}
 	}
 	.slides {
@@ -118,7 +125,7 @@ body {
 		}
 	}
 	.products {
-		margin:85px 0 75px;
+		margin:85px 0 0;
 		.product {
 			img {
 				text-align:center;
@@ -135,8 +142,7 @@ body {
 		}
 	}
 	.content {
-		margin:16px 0 60px;
-		padding:0 10px;
+		margin:16px 0 86px;
 		h1 {
 			margin:30px 0 20px;
 			font-size:32px;
@@ -229,6 +235,11 @@ body {
 			font-size:18px;
 		}
 	}
+}
+
+.logo-img {
+	width:96px;
+	height:96px;
 }
 
 .loading {
