@@ -3,23 +3,42 @@ $(function(){
 	Parse.initialize("VHLTs3Df0CDlYqsdMjAGtMPFONSDiqGlixqizO5I", "UMbIj6CgBQHpDBs2VvQiik4Au17F6TNGPN2attrF");
 	
 	//models
-		// var Gif = Parse.Object.extend("Gif");
-		// 	
-		// var Gifs = Parse.Collection.extend({
-		// 	model: Gif
-		// });
-	
+		var Settings = Parse.Object.extend("settings");
+		var Slides = Parse.Object.extend("slides");
+		
+		var Slides = Parse.Collection.extend({
+		  model: Slides
+		});
+			
 	//views	
 
 		//app view
 		AppView = Parse.View.extend({
 			initialize: function() {
 				_.bindAll(this);
-				new LoadingView();
-		        this.render();
+				var self = this;
+				var query = new Parse.Query(Settings);
+				query.get("lfjE3nUk04", {
+				    success: function(settings) {
+						self.render(settings.attributes);
+				    },
+				    error: function(collection, error) {
+				  		new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
+				});
 		    },
-		    render: function() {
-				
+		    render: function(settings) {
+				new LoadingView({
+					title: settings.title,
+					tagline: settings.tagline,
+					facebook: settings.facebook,
+					twitter: settings.twitter,
+					tumblr: settings.tumblr,
+					pinterest: settings.pinterest
+				});
 		    }
 		});	
 		
@@ -28,14 +47,18 @@ $(function(){
 			el: $('.header-dad'),
 			template: _.template($('#header-template').html()),
 			initialize: function() {
-			  _.bindAll(this);
-			  this.render();
+			    _.bindAll(this);
+				this.render();
 			},
 			render: function() {
 				var data = {
-					title: "The American Wood Company",
-					tagline: "Purveyor of Premium Organic Firewood",
-					template: this.options.template
+					template: this.options.template,
+					title: this.options.title,
+					tagline: this.options.tagline,
+					facebook: this.options.facebook,
+					twitter: this.options.twitter,
+					pinterest: this.options.pinterest,
+					tumblr: this.options.tumblr
 				};
 			  	$(this.el).html(this.template(data));
 				$("a[rel=tooltip]").tooltip();
@@ -47,11 +70,17 @@ $(function(){
 			el: $('.footer-dad'),
 			template: _.template($('#footer-template').html()),
 			initialize: function() {
-			  _.bindAll(this);
-			  this.render();
+			    _.bindAll(this);
+				this.render();
 			},
 			render: function() {
-			  	$(this.el).html(this.template());
+				var data = {
+					facebook: this.options.facebook,
+					twitter: this.options.twitter,
+					pinterest: this.options.pinterest,
+					tumblr: this.options.tumblr
+				};
+			  	$(this.el).html(this.template(data));
 				$("a[rel=tooltip]").tooltip();
 			}
 		});
@@ -80,7 +109,20 @@ $(function(){
 				});
 			},
 			close: function() {
-				new FooterView();
+				new HeaderView({
+					title: this.options.title,
+					tagline: this.options.tagline,
+					facebook: this.options.facebook,
+					twitter: this.options.twitter,
+					pinterest: this.options.pinterest,
+					tumblr: this.options.tumblr
+				});
+				new FooterView({
+					facebook: this.options.facebook,
+					twitter: this.options.twitter,
+					pinterest: this.options.pinterest,
+					tumblr: this.options.tumblr
+				});
 				$('.app').fadeIn(400)
 				this.remove();
 			}
@@ -91,14 +133,31 @@ $(function(){
 			el: $('.content'),
 			template: _.template($('#home-template').html()),
 			initialize: function() {
-			    _.bindAll(this);
-				new HeaderView({
-					template: "home"
+			    _.bindAll(this, "listeners");
+				var self = this;
+				var slides = new Slides();
+				slides.fetch({
+					success: function(slides) {
+						self.render(slides.models);
+					},
+					error: function(collection, error) {
+					    new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
 				});
-			    this.render();
 			},
-			render: function() {
-			  	$(this.el).html(this.template());
+			render: function(slides) {
+			  	var data = {
+					slides: slides
+				};
+				$(this.el).html(this.template(data));
+				$('.carousel-inner .item:first-child').addClass('active');
+				$('.circles span:first-child').addClass('active');
+				this.listeners();
+			},
+			listeners: function() {
 				$(".carousel").carousel();
 				$('body').on('slide', function() {
 					var current = $('.circles span.active');
@@ -134,9 +193,6 @@ $(function(){
 			template: _.template($('#page-template').html()),
 			initialize: function() {
 			    _.bindAll(this);
-				new HeaderView({
-					template: "page"
-				});
 			    this.render();
 			},
 			render: function() {
@@ -156,9 +212,6 @@ $(function(){
 			template: _.template($('#product-template').html()),
 			initialize: function() {
 			    _.bindAll(this);
-				new HeaderView({
-					template: "product"
-				});
 			    this.render();
 			},
 			render: function() {
@@ -169,6 +222,60 @@ $(function(){
 					body: body
 				};
 			  	$(this.el).html(this.template(data));
+			}
+		});
+		
+		//slider view
+		SliderView = Parse.View.extend({
+			el: $('.carousel-inner'),
+			template: _.template($('#slide-template').html()),
+			initialize: function() {
+			    _.bindAll(this);
+				var self = this;
+			    var slides = new Slides();
+				slides.fetch({
+					success: function(slides) {
+						self.render(slides.models);
+					},
+					error: function(collection, error) {
+					    new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
+				});
+			},
+			render: function(slides) {
+				var self = this;
+				slides.forEach(function(slide) {
+					console.log(slide.attributes.image.url);
+					var data = {
+						src: slide.attributes.image.url
+					};
+					$(self.el).prepend(self.template(data));
+				});
+			}
+		});
+		
+		//error view
+		ErrorView = Parse.View.extend({
+			el: $('.error'),
+			template: _.template($('#error-template').html()),
+			initialize: function() {
+			  _.bindAll(this);
+			  this.render();
+			  $('.loading').hide();
+			  $('.content').empty();
+			},
+			render: function() {
+				var data = {
+					title: this.options.title,
+					message: this.options.message
+				};
+			  	$(this.el).html(this.template(data));
+				$('.error').show();
+				_gaq.push(['_trackPageview', 'error']);
+				_gaq.push(['_trackEvent', 'Error', 'error', '']);
 			}
 		});
 		

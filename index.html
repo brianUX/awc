@@ -37,23 +37,19 @@
 						<h3><%= tagline %></h3>
 					</div>
 					<div class="social span2">
-						<a href="" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
-						<a href="" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
-						<a href="" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
-						<a href="" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>				
+						<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+						<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+						<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+						<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>				
 					</div>
 				</div>
 		
 				<div class="menu row-fluid">
-					<% if (template === "home") { %>
-						<ul class="nav nav-tabs toggle">
-						  <li><a href="#/about">About</a></li>
-						  <li><a href="#/the-wood">The Wood</a></li>
-						  <li><a href="#/contact">Contact</a></li>
-						</ul>
-					<%  } else { %>
-						<a href="#/" class="back toggle">&larr; Home</a>
-					<%  } %>
+					<ul class="nav nav-tabs toggle">
+					  <li><a href="#/about">About</a></li>
+					  <li><a href="#/the-wood">The Wood</a></li>
+					  <li><a href="#/contact">Contact</a></li>
+					</ul>
 				</div>
 			</script>
 			<div class="header-dad"></div>
@@ -79,10 +75,10 @@
 							t: 860-575-3185
 						</address>
 						<div class="social">
-							<a href="" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
-							<a href="" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
-							<a href="" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
-							<a href="" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>				
+							<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+							<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+							<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+							<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>			
 						</div>
 					</div>
 				</div>
@@ -90,6 +86,7 @@
 			<div class="footer-dad"></div>
 	
 		</div>
+
 		
 		<!-- start content views -->
 		
@@ -97,21 +94,17 @@
 				<div class="slides row-fluid">
 					<div class="carousel slide">
 						<div class="carousel-inner">
-							<div class="item active">
-								<img src="img/slide3.png" alt="">
-							</div>
-							<div class="item">
-								<img src="img/slide2.png" alt="">
-							</div>
-							<div class="item">
-								<img src="img/slide1.png" alt="">
-							</div>
+							<%  slides.forEach(function(slide) { %>
+								<div class="item">
+									<img src="<%= slide.attributes.image.url %>" alt="">
+								</div>
+							<% }); %>
 						</div>
 					</div>
 					<div class="circles">
-						<span class="active"></span>
-						<span></span>
-						<span></span>
+						<%  slides.forEach(function(slide) { %>
+							<span></span>
+						<% }); %>
 					</div>
 				</div>
 				<div class="products row-fluid">
@@ -131,16 +124,33 @@
 			</script>
 			
 			<script type="text/template" id="page-template">
+				<a href="#/" class="back toggle">&larr; Back</a>
 				<h1><%= title %></h1>
 				<%= body %>
 			</script>
 			
 			<script type="text/template" id="product-template">
+				<a href="#/" class="back toggle">&larr; Back</a>
 				<h1><%= title %></h1>
 				<%= body %>
 			</script>
 			
-		
+			<script type="text/template" id="slide-template">
+				<div class="item active">
+					<img src="<%= src %>" alt="">
+				</div>
+			</script>
+			
+			<script type="text/template" id="error-template">
+				<div class="loading">
+					<div class="logo">
+						<img src="img/logo.png" class="logo-img" alt="the american wood company">
+					</div>
+					<h3><%= title %></h3>
+					<p><%= message %><p>
+				</div>
+			</script>
+			
 		
 		<!-- end content views -->
 	
