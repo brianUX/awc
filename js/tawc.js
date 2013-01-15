@@ -4,10 +4,20 @@ $(function(){
 	
 	//models
 		var Settings = Parse.Object.extend("settings");
-		var Slides = Parse.Object.extend("slides");
 		
+		var Slide = Parse.Object.extend("slides");
 		var Slides = Parse.Collection.extend({
-		  model: Slides
+		  model: Slide
+		});
+		
+		var Page = Parse.Object.extend("pages");
+		var Pages = Parse.Collection.extend({
+		  model: Page
+		});
+		
+		var Product = Parse.Object.extend("products");
+		var Products = Parse.Collection.extend({
+		  model: Product
 		});
 			
 	//views	
@@ -15,12 +25,19 @@ $(function(){
 		//app view
 		AppView = Parse.View.extend({
 			initialize: function() {
-				_.bindAll(this);
+				_.bindAll(this, "getSettings", "renderSettings", "getPages", "renderPages");
+				this.getSettings();
+				this.getPages();
+		    },
+			render: function() {
+				
+			},
+			getSettings: function() {
 				var self = this;
 				var query = new Parse.Query(Settings);
 				query.get("lfjE3nUk04", {
 				    success: function(settings) {
-						self.render(settings.attributes);
+						self.renderSettings(settings.attributes);
 				    },
 				    error: function(collection, error) {
 				  		new ErrorView({
@@ -29,17 +46,42 @@ $(function(){
 						});
 					}
 				});
-		    },
-		    render: function(settings) {
-				new LoadingView({
-					title: settings.title,
-					tagline: settings.tagline,
-					facebook: settings.facebook,
-					twitter: settings.twitter,
-					tumblr: settings.tumblr,
-					pinterest: settings.pinterest
+			},
+		    renderSettings: function(settings) {
+				new LoadingView();
+				new HeaderView({
+					settings: settings
 				});
-		    }
+				new FooterView({
+					settings: settings
+				});
+		    },
+			getPages: function() {
+				var self = this;
+				var pages = new Pages();
+				pages.fetch({
+					success: function(pages) {
+						self.renderPages(pages.models);
+					},
+					error: function(collection, error) {
+					    new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
+				});
+			},
+			renderPages: function(pages) {
+				var self = this;
+				pages.forEach(function(page) {
+					var data = {
+						title: page.attributes.title,
+						url: page.attributes.url
+					};
+					$('.main-nav').append(_.template($('#menu-item').html())(data));
+					$('.footer-nav').append(_.template($('#menu-item').html())(data));
+				});
+			}
 		});	
 		
 		//header view
@@ -52,13 +94,13 @@ $(function(){
 			},
 			render: function() {
 				var data = {
-					template: this.options.template,
-					title: this.options.title,
-					tagline: this.options.tagline,
-					facebook: this.options.facebook,
-					twitter: this.options.twitter,
-					pinterest: this.options.pinterest,
-					tumblr: this.options.tumblr
+					template: this.options.settings.template,
+					title: this.options.settings.title,
+					tagline: this.options.settings.tagline,
+					facebook: this.options.settings.facebook,
+					twitter: this.options.settings.twitter,
+					pinterest: this.options.settings.pinterest,
+					tumblr: this.options.settings.tumblr
 				};
 			  	$(this.el).html(this.template(data));
 				$("a[rel=tooltip]").tooltip();
@@ -67,7 +109,7 @@ $(function(){
 		
 		//footer view
 		FooterView = Parse.View.extend({
-			el: $('.footer-dad'),
+			el: $('.footer-info'),
 			template: _.template($('#footer-template').html()),
 			initialize: function() {
 			    _.bindAll(this);
@@ -75,10 +117,13 @@ $(function(){
 			},
 			render: function() {
 				var data = {
-					facebook: this.options.facebook,
-					twitter: this.options.twitter,
-					pinterest: this.options.pinterest,
-					tumblr: this.options.tumblr
+					address: this.options.settings.address,
+					email: this.options.settings.email,
+					phone: this.options.settings.phone,
+					facebook: this.options.settings.facebook,
+					twitter: this.options.settings.twitter,
+					pinterest: this.options.settings.pinterest,
+					tumblr: this.options.settings.tumblr
 				};
 			  	$(this.el).html(this.template(data));
 				$("a[rel=tooltip]").tooltip();
@@ -95,7 +140,7 @@ $(function(){
 			},
 			render: function() {
 			  	$(this.el).html(this.template());
-				$('.loading').fadeIn(600);
+				$('.loading').fadeIn(300);
 				setTimeout(this.comeOut,800);
 				this.comeIn();
 			},
@@ -109,20 +154,6 @@ $(function(){
 				});
 			},
 			close: function() {
-				new HeaderView({
-					title: this.options.title,
-					tagline: this.options.tagline,
-					facebook: this.options.facebook,
-					twitter: this.options.twitter,
-					pinterest: this.options.pinterest,
-					tumblr: this.options.tumblr
-				});
-				new FooterView({
-					facebook: this.options.facebook,
-					twitter: this.options.twitter,
-					pinterest: this.options.pinterest,
-					tumblr: this.options.tumblr
-				});
 				$('.app').fadeIn(400)
 				this.remove();
 			}
@@ -130,15 +161,24 @@ $(function(){
 		
 		//home view
 		HomeView = Parse.View.extend({
-			el: $('.content'),
-			template: _.template($('#home-template').html()),
+			sliderTemplate: _.template($('#home-slider-template').html()),
+			productTemplate: _.template($('#home-products-template').html()),
 			initialize: function() {
-			    _.bindAll(this, "listeners");
+			    _.bindAll(this, "loadSlides", "renderSlides", "loadProducts", "renderProducts", "listeners");
+				var self = this;
+				$('.content').empty();
+				var inner = "<div class='content-top'></div><div class='content-bottom'></div>";
+				$('.content').html(inner);
+				this.loadSlides();
+				this.loadProducts();
+				this.listeners();
+			},
+			loadSlides: function() {
 				var self = this;
 				var slides = new Slides();
 				slides.fetch({
 					success: function(slides) {
-						self.render(slides.models);
+						self.renderSlides(slides.models);
 					},
 					error: function(collection, error) {
 					    new ErrorView({
@@ -148,14 +188,36 @@ $(function(){
 					}
 				});
 			},
-			render: function(slides) {
+			renderSlides: function(slides) {
+				var self = this;
 			  	var data = {
 					slides: slides
 				};
-				$(this.el).html(this.template(data));
+				$('.content-top').html(this.sliderTemplate(data));
 				$('.carousel-inner .item:first-child').addClass('active');
 				$('.circles span:first-child').addClass('active');
-				this.listeners();
+			},
+			loadProducts: function() {
+				var self = this;
+				var products = new Products();
+				products.fetch({
+					success: function(products) {
+						self.renderProducts(products.models);
+					},
+					error: function(collection, error) {
+					    new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
+				});
+			},
+			renderProducts: function(products) {
+				var self = this;
+				var data = {
+					products: products
+				};
+				$('.content-bottom').html(this.productTemplate(data));
 			},
 			listeners: function() {
 				$(".carousel").carousel();
@@ -193,14 +255,25 @@ $(function(){
 			template: _.template($('#page-template').html()),
 			initialize: function() {
 			    _.bindAll(this);
-			    this.render();
+				var self = this;
+				var id = this.options.id;
+				var query = new Parse.Query(Page);
+				query.get(id, {
+				    success: function(page) {
+						self.render(page.attributes);
+				    },
+				    error: function(collection, error) {
+				  		new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
+				});
 			},
-			render: function() {
-				var body = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies, augue iaculis fermentum dignissim, dolor nibh rutrum erat, in gravida nibh nisl vel tortor. Curabitur dictum dui non justo lacinia malesuada. Mauris et diam lectus, rutrum aliquam justo. Proin sollicitudin, turpis at commodo pellentesque, est nulla congue eros, eget malesuada elit nibh in magna. Proin vel diam in risus pharetra vehicula. Ut eget fringilla odio.</p>\
-				<p>Phasellus ligula diam, aliquet et cursus ac, pretium nec ante. Sed quis imperdiet turpis. Vivamus euismod nulla semper elit congue ac tempus mauris mollis. Pellentesque dignissim consectetur nibh a tincidunt. Mauris augue nisl, imperdiet non suscipit nec, pellentesque sed leo. Suspendisse id massa purus. Ut consequat, neque sed condimentum scelerisque, ipsum lorem fermentum leo, a consectetur eros eros et augue. Donec dapibus placerat turpis sed malesuada.</p>';
+			render: function(page) {
 			  	var data = {
-					title: this.options.title,
-					body: body
+					title: page.title,
+					body: page.body
 				};
 			  	$(this.el).html(this.template(data));
 			}
@@ -212,48 +285,28 @@ $(function(){
 			template: _.template($('#product-template').html()),
 			initialize: function() {
 			    _.bindAll(this);
-			    this.render();
-			},
-			render: function() {
-				var body = "<p><img src='img/item-"+this.options.number+".png' alt=''>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ultricies, augue iaculis fermentum dignissim, dolor nibh rutrum erat, in gravida nibh nisl vel tortor. Curabitur dictum dui non justo lacinia malesuada. Mauris et diam lectus, rutrum aliquam justo. Proin sollicitudin, turpis at commodo pellentesque, est nulla congue eros, eget malesuada elit nibh in magna. Proin vel diam in risus pharetra vehicula. Ut eget fringilla odio.</p>\
-				<p>Phasellus ligula diam, aliquet et cursus ac, pretium nec ante. Sed quis imperdiet turpis. Vivamus euismod nulla semper elit congue ac tempus mauris mollis. Pellentesque dignissim consectetur nibh a tincidunt. Mauris augue nisl, imperdiet non suscipit nec, pellentesque sed leo. Suspendisse id massa purus. Ut consequat, neque sed condimentum scelerisque, ipsum lorem fermentum leo, a consectetur eros eros et augue. Donec dapibus placerat turpis sed malesuada.</p><h4><a href='#'>Suspendisse id massa</a></h4>";
-			  	var data = {
-					title: this.options.title,
-					body: body
-				};
-			  	$(this.el).html(this.template(data));
-			}
-		});
-		
-		//slider view
-		SliderView = Parse.View.extend({
-			el: $('.carousel-inner'),
-			template: _.template($('#slide-template').html()),
-			initialize: function() {
-			    _.bindAll(this);
 				var self = this;
-			    var slides = new Slides();
-				slides.fetch({
-					success: function(slides) {
-						self.render(slides.models);
-					},
-					error: function(collection, error) {
-					    new ErrorView({
+			    var id = this.options.id;
+				var query = new Parse.Query(Product);
+				query.get(id, {
+				    success: function(product) {
+						self.render(product.attributes);
+				    },
+				    error: function(collection, error) {
+				  		new ErrorView({
 							title: "Error",
 							message: "Please Try Again"
 						});
 					}
 				});
 			},
-			render: function(slides) {
-				var self = this;
-				slides.forEach(function(slide) {
-					console.log(slide.attributes.image.url);
-					var data = {
-						src: slide.attributes.image.url
-					};
-					$(self.el).prepend(self.template(data));
-				});
+			render: function(product) {
+			  	var data = {
+					title: product.title,
+					image: product.image.url,
+					body: product.body
+				};
+			  	$(this.el).html(this.template(data));
 			}
 		});
 		
@@ -299,35 +352,32 @@ $(function(){
 			},
 			about: function() {
 				new PageView({
-					title: "About"
+					id: "nubJHwMJyk"
 				});
 			},
 			theWood: function() {
 				new PageView({
-					title: "The Wood"
+					id: "7W70pcYLgK"
 				});
 			},
 			contact: function() {
 				new PageView({
-					title: "Contact"
+					id: "IEoF32EAf2"
 				});
 			},
 			redOak: function() {
 				new ProductView({
-					title: "Red Oak",
-					number : "1"
+					id: "34JvKXACwb"
 				});
 			},
 			olive: function() {
 				new ProductView({
-					title: "Olive",
-					number : "2"
+					id: "0QQdbRymmh"
 				});
 			},
 			almond: function() {
 				new ProductView({
-					title: "Almond",
-					number : "3"
+					id: "PSRce9k6wk"
 				});
 			}
 		});

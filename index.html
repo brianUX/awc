@@ -43,54 +43,31 @@
 						<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>				
 					</div>
 				</div>
-		
-				<div class="menu row-fluid">
-					<ul class="nav nav-tabs toggle">
-					  <li><a href="#/about">About</a></li>
-					  <li><a href="#/the-wood">The Wood</a></li>
-					  <li><a href="#/contact">Contact</a></li>
-					</ul>
-				</div>
 			</script>
 			<div class="header-dad"></div>
 			
+			<script type="text/template" id="menu-item">
+				<li><a href="#/<%= url %>"><%= title %></a></li>
+			</script>
+			<div class="menu row-fluid">
+				<ul class="nav nav-tabs toggle main-nav"></ul>
+			</div>
+			
 			<div class="content row-fluid"></div>
 			
-			<script type="text/template" id="footer-template">
-				<div class="footer row-fluid">
-					<div class="menu-bottom span9">
-						<ul class="nav nav-tabs">
-						  <li><a href="#/about">About</a></li>
-						  <li><a href="#/the-wood">The Wood</a></li>
-						  <li><a href="#/contact">Contact</a></li>
-						</ul>
-					</div>
-					<div class="info span3">
-						<address>
-							The American Wood Company<br>
-							Los Angeles, California
-						</address>
-						<address>
-							e: <a href="mailto:info@theamericanwoodcompany.com">info@theamericanwoodcompany.com</a><br>
-							t: 860-575-3185
-						</address>
-						<div class="social">
-							<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
-							<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
-							<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
-							<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>			
-						</div>
-					</div>
+			<div class="footer row-fluid">
+				<div class="menu-bottom span9">
+					<ul class="nav nav-tabs footer-nav"></ul>
 				</div>
-			</script>
-			<div class="footer-dad"></div>
-	
+				<div class="info span3 footer-info"></div>
+			</div>
+			
 		</div>
 
 		
 		<!-- start content views -->
 		
-			<script type="text/template" id="home-template">
+			<script type="text/template" id="home-slider-template">
 				<div class="slides row-fluid">
 					<div class="carousel slide">
 						<div class="carousel-inner">
@@ -107,32 +84,38 @@
 						<% }); %>
 					</div>
 				</div>
+			</script>
+			
+			<script type="text/template" id="home-products-template">
 				<div class="products row-fluid">
-					<div class="product span4">
-						<a href="#/red-oak"><img src="img/item-1.png" alt=""></a>
-						<h4><a href="#/red-oak">Red Oak</a></h4>
-					</div>
-					<div class="product span4">
-						<a href="#/olive"><img src="img/item-2.png" alt=""></a>
-						<h4><a href="#/olive">Olive</a></h4>
-					</div>
-					<div class="product span4">
-						<a href="#/almond"><img src="img/item-3.png" alt=""></a>
-						<h4><a href="#/almond">Almond</a></h4>
-					</div>
+					<%  products.forEach(function(product) { %>
+						<div class="product span4">
+							<a href="#/<%= product.attributes.url %>"><img src="<%= product.attributes.image.url %>" alt=""></a>
+							<h4><a href="#/red-oak"><%= product.attributes.title %></a></h4>
+						</div>
+					<% }); %>
 				</div>
 			</script>
 			
 			<script type="text/template" id="page-template">
-				<a href="#/" class="back toggle">&larr; Back</a>
-				<h1><%= title %></h1>
-				<%= body %>
+			<a href="#/" class="back toggle">&larr; Back</a>
+			<h1><%= title %></h1>
+			<div class="product-body">
+				<div class="description">
+					<%= body %>
+				</div>
+			</div>
 			</script>
 			
 			<script type="text/template" id="product-template">
 				<a href="#/" class="back toggle">&larr; Back</a>
 				<h1><%= title %></h1>
-				<%= body %>
+				<div class="product-body">
+					<img src='<%= image %>' alt=''>
+					<div class="description">
+						<%= body %>
+					</div>
+				</div>
 			</script>
 			
 			<script type="text/template" id="slide-template">
@@ -151,6 +134,22 @@
 				</div>
 			</script>
 			
+			<script type="text/template" id="footer-template">
+				<address>
+					 <%= address %>
+				</address>
+				<address>
+					e: <a href="mailto:<%= email %>"><%= email %></a><br>
+					t: <%= phone %>
+				</address>
+				<div class="social">
+					<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+					<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+					<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+					<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>			
+				</div>
+			</script>
+			
 		
 		<!-- end content views -->
 	
@@ -161,7 +160,6 @@
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
 
-		<script src="js/views.js"></script>  
 		<script src="js/tawc.js"></script>        
 		<script src="js/plugins.js"></script>
 
