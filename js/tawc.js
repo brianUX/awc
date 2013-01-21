@@ -303,7 +303,7 @@ $(function(){
 			render: function(product) {
 			  	var data = {
 					title: product.title,
-					image: product.image.url,
+					image: product.photo,
 					body: product.body
 				};
 			  	$(this.el).html(this.template(data));

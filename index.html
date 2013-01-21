@@ -73,7 +73,7 @@
 						<div class="carousel-inner">
 							<%  slides.forEach(function(slide) { %>
 								<div class="item">
-									<img src="<%= slide.attributes.image.url %>" alt="">
+									<img src="<%= slide.attributes.photo %>" alt="">
 								</div>
 							<% }); %>
 						</div>
@@ -90,8 +90,8 @@
 				<div class="products row-fluid">
 					<%  products.forEach(function(product) { %>
 						<div class="product span4">
-							<a href="#/<%= product.attributes.url %>"><img src="<%= product.attributes.image.url %>" alt=""></a>
-							<h4><a href="#/red-oak"><%= product.attributes.title %></a></h4>
+							<a href="#/<%= product.attributes.url %>"><img src="<%= product.attributes.photo %>" alt=""></a>
+							<h4><a href="#/<%= product.attributes.url %>"><%= product.attributes.title %></a></h4>
 						</div>
 					<% }); %>
 				</div>

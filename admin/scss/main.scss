@@ -1,0 +1,81 @@
+@import "compass/css3";
+@import "compass/utilities";
+
+body {
+  background-color: #f9f9f9;
+}
+
+#login {
+	.logo {
+		width:150px;
+		margin:50px auto 40px;
+		img {
+			width:150px;
+		}
+	}
+	.form-signin {
+		max-width: 300px;
+		padding: 19px 29px 29px;
+		margin: 0 auto 20px;
+		background-color: #fff;
+		border: 1px solid #e5e5e5;
+		@include border-radius(5px);
+		@include box-shadow(0 1px 2px rgba(0,0,0,.05));
+		.form-signin-heading, .checkbox {
+			margin-bottom: 10px;
+		}
+		input[type="text"], input[type="password"] {
+			font-size: 16px;
+			height: auto;
+			margin-bottom: 15px;
+			padding: 7px 9px;
+		}
+	}
+}
+
+#dashboard {
+	.dash-content {
+		margin:65px 0 0;
+	}
+	table {
+		td {
+			text-transform:capitalize;
+		}
+	}
+	h2 {
+		text-transform:capitalize;
+	}
+	form {
+		legend {
+			text-transform:capitalize;
+		}
+		input#title {
+			text-transform:capitalize;
+		}
+		button.submit {
+			margin-top:30px;
+		}
+	}
+	table.slideshow {
+		td {
+			p {
+				
+			}
+		}
+	}
+}
+
+.form-horizontal {
+	.control-label {
+		width: 80px;
+	}
+	.controls {
+		margin-left:100px;
+	}
+} 
+
+
+
+
+
+
