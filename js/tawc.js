@@ -171,7 +171,6 @@ $(function(){
 				$('.content').html(inner);
 				this.loadSlides();
 				this.loadProducts();
-				this.listeners();
 			},
 			loadSlides: function() {
 				var self = this;
@@ -194,6 +193,8 @@ $(function(){
 					slides: slides
 				};
 				$('.content-top').html(this.sliderTemplate(data));
+				$(".carousel").carousel();
+				this.listeners();
 				$('.carousel-inner .item:first-child').addClass('active');
 				$('.circles span:first-child').addClass('active');
 			},
@@ -220,7 +221,6 @@ $(function(){
 				$('.content-bottom').html(this.productTemplate(data));
 			},
 			listeners: function() {
-				$(".carousel").carousel();
 				$('body').on('slide', function() {
 					var current = $('.circles span.active');
 					current.removeClass('active');
@@ -338,7 +338,7 @@ $(function(){
 			routes: {
 				"" : "home",
 				"about" : "about",
-				"the-wood" : "theWood",
+				"faq" : "faq",
 				"contact" : "contact",
 				"red-oak" : "redOak",
 				"almond" : "almond",
@@ -355,7 +355,7 @@ $(function(){
 					id: "nubJHwMJyk"
 				});
 			},
-			theWood: function() {
+			faq: function() {
 				new PageView({
 					id: "7W70pcYLgK"
 				});

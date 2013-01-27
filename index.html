@@ -140,7 +140,9 @@
 				</address>
 				<address>
 					e: <a href="mailto:<%= email %>"><%= email %></a><br>
-					t: <%= phone %>
+					<% if(phone) { %>
+						t: <%= phone %>
+					<% } %>
 				</address>
 				<div class="social">
 					<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
