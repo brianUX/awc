@@ -26,11 +26,12 @@ $(function(){
 		AppView = Parse.View.extend({
 			initialize: function() {
 				_.bindAll(this, "getSettings", "renderSettings", "getPages", "renderPages");
+				this.render();
 				this.getSettings();
 				this.getPages();
 		    },
 			render: function() {
-				
+				new LoadingView();
 			},
 			getSettings: function() {
 				var self = this;
@@ -48,7 +49,6 @@ $(function(){
 				});
 			},
 		    renderSettings: function(settings) {
-				new LoadingView();
 				new HeaderView({
 					settings: settings
 				});
