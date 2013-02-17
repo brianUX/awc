@@ -249,7 +249,7 @@ $(function(){
 				});
 			},
 			render: function(page) {
-				console.log(page)
+				console.log(page.attributes.body)
 			  	var data = {
 					title: page.attributes.title,
 					body: page.attributes.body,
@@ -260,7 +260,7 @@ $(function(){
 				$('textarea:visible').wysihtml5({
 					"html": true, //Button which allows you to edit the generated HTML. Default false
 					"image": false, //Button to insert an image. Default true,
-					"stylesheets": ["../css/typo.css"]
+					"stylesheets": ["css/typo.css"]
 				});
 			},
 			update: function() {
@@ -369,7 +369,7 @@ $(function(){
 				$('textarea:visible').wysihtml5({
 					"html": true, //Button which allows you to edit the generated HTML. Default false
 					"image": false, //Button to insert an image. Default true,
-					"stylesheets": ["../css/typo.css"]
+					"stylesheets": ["css/typo.css"]
 				});
 			},
 			update: function() {
