@@ -101,7 +101,7 @@ body {
 		}
 	}
 	.slides {
-		margin:15px 0 40px;
+		margin:10px 0 40px;
 		.item {
 			img {
 				width:100%;
@@ -171,13 +171,16 @@ body {
 		}
 		.back {
 			//color:#4a4a4a;
-			font-size: 13px;
+			font-size: 14px;
 			position: absolute;
-			top: -14px;
-			left: 10px;
+			top: -5px;
+			left: 0;
 			&:active {
-				top:-13px;
+				top:-6px;
 			}
+		}
+		.top-photo {
+			//padding-top:10px;
 		}
 		.product-body {
 			.photo {
@@ -187,8 +190,11 @@ body {
 				}
 				.thumbs {
 					margin:12px 0 0 0;
+					a {
+						padding-bottom:6px;
+					}
 					a.active {
-						border:2px solid #1e1e1e;
+						border-bottom:2px solid #929292;
 					}
 					a:hover {
 						cursor:pointer;

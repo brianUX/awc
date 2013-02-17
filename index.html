@@ -106,7 +106,12 @@
 			</script>
 			
 			<script type="text/template" id="page-template">
-			<a href="#/" class="back toggle">&larr; Back</a>
+			<!-- <a href="#/" class="back toggle">&larr; Back</a> -->
+			<div class="top-photo row-fluid">
+				<div class="span12">
+					<img src="<%= photo %>">
+				</div>
+			</div>
 			<h1><%= title %></h1>
 			<div class="product-body">
 				<div class="description">

@@ -259,10 +259,11 @@ $(function(){
 			el: $('.sub-content'),
 			template: _.template($('#page-template').html()),
 			events: {
-				"submit form.page" : "update"
+				"submit form.page" : "update",
+				"change input.upload" : "grabFile"
 		    },
 			initialize: function() {
-			    _.bindAll(this, "update");
+			    _.bindAll(this, "update", "grabFile", "uploadImage");
 				var self = this;
 				$(".main-nav li.active").removeClass('active');
 			    //fetch page
@@ -285,6 +286,7 @@ $(function(){
 			  	var data = {
 					title: page.attributes.title,
 					body: page.attributes.body,
+					photo: page.attributes.photo,
 					url: page.attributes.url,
 					id: page.id
 				};
@@ -310,12 +312,14 @@ $(function(){
 				var title = $('input#title').val();
 				var url = $('input#url').val();
 				var body = $('textarea#body').val();
+				var photo = $('img#photo').attr('src');
 				//save new values
 				var page = new Parse.Query(Page);
 				page.get(self.id, {
 				    success: function(page) {
 						page.set("title", title);
 						page.set("url", url);
+						page.set("photo", photo);
 						page.set("body", body);
 						page.save(null, {
 							success: function() {
@@ -335,6 +339,41 @@ $(function(){
 						});
 					}
 				});			
+				return false;
+			},
+			grabFile: function(e) {
+				var el = $(e.target);
+				var files = e.target.files || e.dataTransfer.files;
+		        this.file = files[0];
+				this.filetype = this.file.type;
+				this.uploadImage(el);
+			},
+			uploadImage: function(el) {
+				var self = this;
+				var serverUrl = 'https://api.parse.com/1/files/' + this.file.name;
+				var id = el.attr('id');
+				//send file
+				$.ajax({
+					type: "POST",
+					beforeSend: function(request) {
+						request.setRequestHeader("X-Parse-Application-Id", "VHLTs3Df0CDlYqsdMjAGtMPFONSDiqGlixqizO5I");
+						request.setRequestHeader("X-Parse-REST-API-Key", "nag9lASDJkgHUTsp55h8HvKlYdy23VNe0YVzp40O");
+						request.setRequestHeader("Content-Type", self.file.type);
+					},
+					url: serverUrl,
+					data: self.file,
+					processData: false,
+					contentType: false,
+					success: function(image) {
+						$("img#"+id+"").attr('src', image.url)
+					},
+					error: function(image) {
+					  	new ErrorView({
+							title: "Awww, Bro",
+							message: "We encountered an error. Try again."
+						});
+					}
+				});
 				return false;
 			}
 		});

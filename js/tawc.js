@@ -329,7 +329,8 @@ $(function(){
 			render: function(page) {
 			  	var data = {
 					title: page.title,
-					body: page.body
+					body: page.body,
+					photo: page.photo
 				};
 			  	$(this.el).html(this.template(data));
 			}
