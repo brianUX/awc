@@ -202,7 +202,7 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="title">URL</label>
+						<label class="control-label" for="url">Url</label>
 						<div class="controls">
 							<input class="input-block-level" type="text" id="url" value="<%= url %>">
 						</div>
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="title">URL</label>
+						<label class="control-label" for="url">Url</label>
 						<div class="controls">
 							<input class="input-block-level" type="text" id="url" value="<%= url %>">
 						</div>
@@ -277,14 +277,40 @@
 						</div>
 					</div>
 				</div>
-				<legend><small>Image</small></legend>
-				<div class="row-fluid">
-					<div class="span3">
-						<img src="<%= src %>" class="img-polaroid product"> 
+				<legend><small>Product Photos (need to be 367x280px)</small></legend>
+				<div class="photos">
+					<div class="row-fluid">
+						<div class="span1">
+							<p><strong>Main Photo</strong></p>
+						</div>
+						<div class="span2">
+							<img id="photo" src="<%= photo %>" class="img-polaroid product"> 
+						</div>
+						<div class="span9">
+							<p><input type="file" accept="image/png,imgage/jpg,image/gif" name="fileselect" id="photo" class="upload"></p>
+						</div>
 					</div>
-					<div class="span9">
-						<p>Product photo needs to be 367x280px</p>
-						<p><input type="file" accept="image/png,imgage/jpg,image/gif" name="fileselect" id="fileselect" class=""></p>
+					<div class="row-fluid">
+						<div class="span1">
+							<p><strong>2nd Photo</strong></p>
+						</div>
+						<div class="span2">
+							<img id="photo2" src="<%= photo2 %>" class="img-polaroid product"> 
+						</div>
+						<div class="span9">
+							<p><input type="file" accept="image/png,imgage/jpg,image/gif" name="fileselect" id="photo2" class="upload"></p>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="span1">
+							<p><strong>3rd Photo</strong></p>
+						</div>
+						<div class="span2">
+							<img id="photo3" src="<%= photo3 %>" class="img-polaroid product"> 
+						</div>
+						<div class="span9">
+							<p><input type="file" accept="image/png,imgage/jpg,image/gif" name="fileselect" id="photo3" class="upload"></p>
+						</div>
 					</div>
 				</div>
 				<div class="row-fluid">

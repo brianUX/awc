@@ -240,6 +240,9 @@ $(function(){
 							console.log(order)
 							object.set("order", order);
 							object.save();
+							$(".alert-success").show();
+							$('button.submit').removeClass('disabled');
+							return false;
 						},
 						error: function(object,error) {
 							$(".alert-error").show();
@@ -248,8 +251,6 @@ $(function(){
 						}
 					});
 				});
-				$(".alert-success").show();
-				$('button.submit').removeClass('disabled');
 			}
 		});
 		
@@ -384,6 +385,9 @@ $(function(){
 						success: function(object) {
 							object.set("order", order);
 							object.save();
+							$(".alert-success").show();
+							$('button.submit').removeClass('disabled');
+							return false;
 						},
 						error: function(object,error) {
 							$(".alert-error").show();
@@ -392,8 +396,6 @@ $(function(){
 						}
 					});
 				});
-				$(".alert-success").show();
-				$('button.submit').removeClass('disabled');
 			}
 		});
 		
@@ -403,7 +405,7 @@ $(function(){
 			template: _.template($('#product-template').html()),
 			events: {
 				"submit form.product" : "update",
-				"change input#fileselect" : "grabFile"
+				"change input.upload" : "grabFile"
 		    },
 			initialize: function() {
 			    _.bindAll(this, "update", "grabFile", "uploadImage");
@@ -429,7 +431,9 @@ $(function(){
 					title: product.title,
 					body: product.body,
 					url: product.url,
-					src: product.photo,
+					photo: product.photo,
+					photo2: product.photo2,
+					photo3: product.photo3,
 					id: product.id
 				};
 			  	$(this.el).html(this.template(data));
@@ -454,7 +458,9 @@ $(function(){
 				var title = $('input#title').val();
 				var url = $('input#url').val();
 				var body = $('textarea#body').val();
-				var photo = $("img.product:visible").attr('src');
+				var photo = $("img#photo").attr('src');
+				var photo2 = $("img#photo2").attr('src');
+				var photo3 = $("img#photo3").attr('src');
 				//save new values
 				var product = new Parse.Query(Product);
 				product.get(self.id, {
@@ -463,6 +469,8 @@ $(function(){
 						product.set("url", url);
 						product.set("body", body);
 						product.set("photo", photo);
+						product.set("photo2", photo2);
+						product.set("photo3", photo3);
 						product.save(null, {
 							success: function() {
 		 						$(".alert-success").show();
@@ -484,15 +492,18 @@ $(function(){
 				return false;
 			},
 			grabFile: function(e) {
+				var el = $(e.target);
 				var files = e.target.files || e.dataTransfer.files;
 		        this.file = files[0];
 				this.filetype = this.file.type;
 				console.log(this.file)
-				this.uploadImage();
+				this.uploadImage(el);
 			},
-			uploadImage: function() {
+			uploadImage: function(el) {
 				var self = this;
 				var serverUrl = 'https://api.parse.com/1/files/' + this.file.name;
+				var id = el.attr('id');
+				console.log()
 				//send file
 				$.ajax({
 					type: "POST",
@@ -506,8 +517,7 @@ $(function(){
 					processData: false,
 					contentType: false,
 					success: function(image) {
-						console.log(image)
-						$("img.product:visible").attr('src', image.url)
+						$("img#"+id+"").attr('src', image.url)
 					},
 					error: function(image) {
 					  	new ErrorView({

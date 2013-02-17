@@ -37,10 +37,18 @@
 						<h3><%= tagline %></h3>
 					</div>
 					<div class="social span2">
-						<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
-						<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
-						<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
-						<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>				
+						<% if(tumblr) { %>
+							<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+						<% } %>	
+						<% if(pinterest) { %>
+							<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+						<% } %>	
+						<% if(twitter) { %>
+							<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+						<% } %>	
+						<% if(facebook) { %>
+							<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>
+						<% } %>				
 					</div>
 				</div>
 			</script>
@@ -110,9 +118,18 @@
 			<script type="text/template" id="product-template">
 				<a href="#/" class="back toggle">&larr; Back</a>
 				<h1><%= title %></h1>
-				<div class="product-body">
-					<img src='<%= image %>' alt=''>
-					<div class="description">
+				<div class="product-body row-fluid">
+					<div class="photo span6 row-fluid">
+						<div class="main span12">
+							<img id="main" src='<%= photo %>' alt=''>
+						</div>
+						<div class="thumbs span12 row-fluid">
+							<a class="span4 active"><img src='<%= photo %>' alt=''></a>
+							<a class="span4"><img src='<%= photo2 %>' alt=''></a>
+							<a class="span4"><img src='<%= photo3 %>' alt=''></a>
+						</div>
+					</div>
+					<div class="description span6">
 						<%= body %>
 					</div>
 				</div>
@@ -142,10 +159,18 @@
 					<% } %>
 				</address>
 				<div class="social">
-					<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
-					<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
-					<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
-					<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>			
+					<% if(tumblr) { %>
+						<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+					<% } %>	
+					<% if(pinterest) { %>
+						<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+					<% } %>	
+					<% if(twitter) { %>
+						<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+					<% } %>	
+					<% if(facebook) { %>
+						<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>
+					<% } %>			
 				</div>
 			</script>
 			

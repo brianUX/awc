@@ -171,7 +171,7 @@ body {
 		}
 		.back {
 			//color:#4a4a4a;
-			font-size: 16px;
+			font-size: 13px;
 			position: absolute;
 			top: -14px;
 			left: 10px;
@@ -180,10 +180,20 @@ body {
 			}
 		}
 		.product-body {
-			img {
-				float:left;
-				padding:0 20px 10px 0;
-				width:50%;
+			.photo {
+				padding-bottom:20px;
+				img {
+					width:100%;
+				}
+				.thumbs {
+					margin:12px 0 0 0;
+					a.active {
+						border:2px solid #1e1e1e;
+					}
+					a:hover {
+						cursor:pointer;
+					}
+				}
 			}
 			.description {
 				
@@ -225,10 +235,10 @@ body {
 				color:#666;
 			}
 			.social {
-				min-width:117px;
 				position: absolute;
 				left: -4px;
 				bottom:-30px;
+				float:left;
 				a {
 					border:1px solid #3a3a3a;
 					padding:1px 4px 5px;

@@ -194,7 +194,7 @@ $(function(){
 			render: function() {
 			  	$(this.el).html(this.template());
 				$('.loading').fadeIn(300);
-				setTimeout(this.comeOut,800);
+				setTimeout(this.comeOut,1000);
 				this.comeIn();
 			},
 			comeIn: function() {
@@ -207,7 +207,7 @@ $(function(){
 				});
 			},
 			close: function() {
-				$('.app').fadeIn(400)
+				$('.app').fadeIn(380)
 				this.remove();
 			}
 		});	
@@ -339,8 +339,11 @@ $(function(){
 		ProductView = Parse.View.extend({
 			el: $('.content'),
 			template: _.template($('#product-template').html()),
+			events: {
+				"click .thumbs a" : "rotate"
+			},
 			initialize: function() {
-			    _.bindAll(this);
+			    _.bindAll(this, "rotate");
 				var self = this;
 			    var id = this.options.id;
 				var query = new Parse.Query(Product);
@@ -359,10 +362,25 @@ $(function(){
 			render: function(product) {
 			  	var data = {
 					title: product.title,
-					image: product.photo,
+					photo: product.photo,
+					photo2: product.photo2,
+					photo3: product.photo3,
 					body: product.body
 				};
 			  	$(this.el).html(this.template(data));
+			},
+			rotate: function(e) {
+				var climber = $(e.target);
+				var climberSrc = climber.attr('src');
+				if (climber.hasClass('active')) {
+					console.log('active')
+					return false;
+				} else {
+					console.log('new')
+					$('.thumbs a.active').removeClass('active');
+					climber.parent('a').addClass('active');
+					$('img#main').attr('src', climberSrc);
+				}
 			}
 		});
 		
