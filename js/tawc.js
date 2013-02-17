@@ -21,6 +21,56 @@ $(function(){
 		});
 			
 	//views	
+	
+		//router
+		RouterView = Parse.View.extend({
+			initialize: function() {
+				_.bindAll(this, "fetch", "find");
+				this.fetch();
+			}, 
+			fetch: function() {
+				var self = this;
+				var pages = new Pages();
+				pages.fetch({
+					success: function(pages) {
+						var pages = pages.models;
+						var products = new Products();
+						products.fetch({
+							success: function(products) {
+								var products = products.models;
+								self.find(pages,products);
+							},
+							error: function(pages, error) {}
+						});
+					},
+					error: function(pages, error) {}
+				});
+			},
+			find: function(pages,products) {
+				var slug = this.options.slug;
+				//check pages
+				for (var i = 0; i < pages.length; i++) {
+				    if (pages[i].attributes.url === slug) {
+						var id = pages[i].id;
+						new PageView({id: id});
+						return false;
+					}
+				}
+				//check products
+				for (var i = 0; i < products.length; i++) {
+				    if (products[i].attributes.url === slug) {
+						var id = products[i].id;
+						new ProductView({id: id});
+						return false;
+					}
+				}
+				//error
+				new ErrorView({
+					title: "404",
+					message: "Page Not Found"
+				});
+			}
+		});
 
 		//app view
 		AppView = Parse.View.extend({
@@ -59,6 +109,9 @@ $(function(){
 			getPages: function() {
 				var self = this;
 				var pages = new Pages();
+				pages.comparator = function(object) {
+				  return object.get("order");
+				};
 				pages.fetch({
 					success: function(pages) {
 						self.renderPages(pages.models);
@@ -201,6 +254,9 @@ $(function(){
 			loadProducts: function() {
 				var self = this;
 				var products = new Products();
+				products.comparator = function(object) {
+				  return object.get("order");
+				};
 				products.fetch({
 					success: function(products) {
 						self.renderProducts(products.models);
@@ -310,15 +366,16 @@ $(function(){
 			}
 		});
 		
+		
 		//error view
 		ErrorView = Parse.View.extend({
-			el: $('.error'),
+			el: $('.content'),
 			template: _.template($('#error-template').html()),
 			initialize: function() {
 			  _.bindAll(this);
-			  this.render();
 			  $('.loading').hide();
 			  $('.content').empty();
+			  this.render();
 			},
 			render: function() {
 				var data = {
@@ -326,9 +383,6 @@ $(function(){
 					message: this.options.message
 				};
 			  	$(this.el).html(this.template(data));
-				$('.error').show();
-				_gaq.push(['_trackPageview', 'error']);
-				_gaq.push(['_trackEvent', 'Error', 'error', '']);
 			}
 		});
 		
@@ -337,12 +391,7 @@ $(function(){
 		var AppRouter = Parse.Router.extend({
 			routes: {
 				"" : "home",
-				"about" : "about",
-				"faq" : "faq",
-				"contact" : "contact",
-				"red-oak" : "redOak",
-				"almond" : "almond",
-				"olive" : "olive"
+				":slug" : "router"
 			},
 			initialize: function() {
 		        new AppView();
@@ -350,34 +399,9 @@ $(function(){
 			home: function() {
 				new HomeView();
 			},
-			about: function() {
-				new PageView({
-					id: "nubJHwMJyk"
-				});
-			},
-			faq: function() {
-				new PageView({
-					id: "7W70pcYLgK"
-				});
-			},
-			contact: function() {
-				new PageView({
-					id: "IEoF32EAf2"
-				});
-			},
-			redOak: function() {
-				new ProductView({
-					id: "34JvKXACwb"
-				});
-			},
-			olive: function() {
-				new ProductView({
-					id: "0QQdbRymmh"
-				});
-			},
-			almond: function() {
-				new ProductView({
-					id: "PSRce9k6wk"
+			router: function(slug) {
+				new RouterView({
+					slug: slug
 				});
 			}
 		});

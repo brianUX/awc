@@ -161,10 +161,13 @@
 		
 		<script type="text/template" id="pages-template">
 			<h2>Pages</h2>
+			<div class="alert alert-success hide">Page order updated!</div>
+			<div class="alert alert-error hide">Error saving page order. Please try again.</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>Title</th>
+						<th>Order</th>
 						<th>Last Updated</th>
 					</tr>
 				</thead>
@@ -172,11 +175,17 @@
 					<%  pages.forEach(function(page) { %>
 						<tr>
 							<td><a href="#/page/<%= page.id %>"><%= page.attributes.title %></a></td>
+							<td><input type="text" class="order" id="<%= page.id %>" placeholder="<%= page.attributes.order %>" value="<%= page.attributes.order %>"></td>
 							<td><%= page.updatedAt %></td>
 						</tr>
 					<% }); %>
 				</tbody>
 			</table>
+			<div class="row-fluid">
+				<div class="control-group">
+					<button type="submit" class="btn btn-primary btn-large submit">Save Order</button>
+				</div>
+			</div>
 		</script>
 		
 		<script type="text/template" id="page-template">
@@ -190,6 +199,12 @@
 						<label class="control-label" for="title">Title</label>
 						<div class="controls">
 							<input class="input-block-level" type="text" id="title" value="<%= title %>">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="title">URL</label>
+						<div class="controls">
+							<input class="input-block-level" type="text" id="url" value="<%= url %>">
 						</div>
 					</div>
 					<div class="control-group">
@@ -209,10 +224,13 @@
 		
 		<script type="text/template" id="products-template">
 			<h2>Products</h2>
+			<div class="alert alert-success hide">Products order updated!</div>
+			<div class="alert alert-error hide">Error saving product order. Please try again.</div>
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>Title</th>
+						<th>Order</th>
 						<th>Last Updated</th>
 					</tr>
 				</thead>
@@ -220,11 +238,17 @@
 					<%  products.forEach(function(product) { %>
 						<tr>
 							<td><a href="#/product/<%= product.id %>"><%= product.attributes.title %></a></td>
+							<td><input type="text" class="order" id="<%= product.id %>" placeholder="<%= product.attributes.order %>" value="<%= product.attributes.order %>"></td>
 							<td><%= product.updatedAt %></td>
 						</tr>
 					<% }); %>
 				</tbody>
 			</table>
+			<div class="row-fluid">
+				<div class="control-group">
+					<button type="submit" class="btn btn-primary btn-large submit">Save Order</button>
+				</div>
+			</div>
 		</script>
 		
 		<script type="text/template" id="product-template">
@@ -238,6 +262,12 @@
 						<label class="control-label" for="title">Title</label>
 						<div class="controls">
 							<input class="input-block-level" type="text" id="title" value="<%= title %>">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="title">URL</label>
+						<div class="controls">
+							<input class="input-block-level" type="text" id="url" value="<%= url %>">
 						</div>
 					</div>
 					<div class="control-group">

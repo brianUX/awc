@@ -195,15 +195,22 @@ $(function(){
 		PagesView = Parse.View.extend({
 			el: $('.sub-content'),
 			template: _.template($('#pages-template').html()),
+			events: {
+				"click button.submit" : "changeOrder"
+			},
 			initialize: function() {
-			    _.bindAll(this);
+			    _.bindAll(this, "changeOrder");
 				var self = this;
 				$(".main-nav li.active").removeClass('active');
 				$(".main-nav li.pages").addClass("active");
 			    //fetch pages
 				var pages = new Pages();
+				pages.comparator = function(object) {
+				  return object.get("order");
+				};
 				pages.fetch({
 					success: function(pages) {
+						self.pages = pages;
 						self.render(pages.models);
 					},
 					error: function(collection, error) {
@@ -219,6 +226,30 @@ $(function(){
 					pages: pages
 				};
 			  	$(this.el).html(this.template(data));
+			},
+			changeOrder: function() {
+				$('button.submit').addClass('disabled');
+				$(".alert").hide();
+				$("input.order").each(function(){
+					var id = $(this).attr('id');
+					var order = parseFloat($(this).val());
+					var page = new Parse.Query(Page);
+					page.get(id, {
+						success: function(object) {
+							console.log(object)
+							console.log(order)
+							object.set("order", order);
+							object.save();
+						},
+						error: function(object,error) {
+							$(".alert-error").show();
+							$('button.submit').removeClass('disabled');
+							return false;
+						}
+					});
+				});
+				$(".alert-success").show();
+				$('button.submit').removeClass('disabled');
 			}
 		});
 		
@@ -262,6 +293,12 @@ $(function(){
 					"image": false, //Button to insert an image. Default true,
 					"stylesheets": ["css/typo.css"]
 				});
+				$("input#url").keydown(function (e) {
+				     if (e.keyCode == 32) { 
+				       $(this).val($(this).val() + "-"); // append '-' to input
+				       return false; // return false to prevent space from being added
+				     }
+				});
 			},
 			update: function() {
 				console.log(this.id);
@@ -270,12 +307,14 @@ $(function(){
 				$(".alert").hide();
 				//new values
 				var title = $('input#title').val();
+				var url = $('input#url').val();
 				var body = $('textarea#body').val();
 				//save new values
 				var page = new Parse.Query(Page);
 				page.get(self.id, {
 				    success: function(page) {
 						page.set("title", title);
+						page.set("url", url);
 						page.set("body", body);
 						page.save(null, {
 							success: function() {
@@ -303,13 +342,19 @@ $(function(){
 		ProductsView = Parse.View.extend({
 			el: $('.sub-content'),
 			template: _.template($('#products-template').html()),
+			events: {
+				"click button.submit" : "changeOrder"
+			},
 			initialize: function() {
-			    _.bindAll(this);
+			    _.bindAll(this, "changeOrder");
 				var self = this;
 				$(".main-nav li.active").removeClass('active');
 				$(".main-nav li.products").addClass("active");
 			    //fetch products
 				var products = new Products();
+				products.comparator = function(object) {
+				  return object.get("order");
+				};
 				products.fetch({
 					success: function(products) {
 						self.render(products.models);
@@ -327,6 +372,28 @@ $(function(){
 					products: products
 				};
 			  	$(this.el).html(this.template(data));
+			},
+			changeOrder: function() {
+				$('button.submit').addClass('disabled');
+				$(".alert").hide();
+				$("input.order").each(function(){
+					var id = $(this).attr('id');
+					var order = parseFloat($(this).val());
+					var product = new Parse.Query(Product);
+					product.get(id, {
+						success: function(object) {
+							object.set("order", order);
+							object.save();
+						},
+						error: function(object,error) {
+							$(".alert-error").show();
+							$('button.submit').removeClass('disabled');
+							return false;
+						}
+					});
+				});
+				$(".alert-success").show();
+				$('button.submit').removeClass('disabled');
 			}
 		});
 		
@@ -371,6 +438,12 @@ $(function(){
 					"image": false, //Button to insert an image. Default true,
 					"stylesheets": ["css/typo.css"]
 				});
+				$("input#url").keydown(function (e) {
+				     if (e.keyCode == 32) { 
+				       $(this).val($(this).val() + "-"); // append '-' to input
+				       return false; // return false to prevent space from being added
+				     }
+				});
 			},
 			update: function() {
 				console.log(this.id);
@@ -379,6 +452,7 @@ $(function(){
 				$(".alert").hide();
 				//new values
 				var title = $('input#title').val();
+				var url = $('input#url').val();
 				var body = $('textarea#body').val();
 				var photo = $("img.product:visible").attr('src');
 				//save new values
@@ -386,6 +460,7 @@ $(function(){
 				product.get(self.id, {
 				    success: function(product) {
 						product.set("title", title);
+						product.set("url", url);
 						product.set("body", body);
 						product.set("photo", photo);
 						product.save(null, {
