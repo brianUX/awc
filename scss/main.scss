@@ -192,6 +192,8 @@ body {
 					margin:12px 0 0 0;
 					a {
 						padding-bottom:6px;
+						max-width: 32%;
+						float: left;
 					}
 					a.active {
 						border-bottom:2px solid #929292;
@@ -368,6 +370,20 @@ body {
 				width: 365px;
 			}
 		}
+		.content {
+			.product-body {
+				.photo {
+					.thumbs {
+						a {
+							padding-right:12px;
+						}
+					}
+				}
+				.description {
+
+				}
+			}
+		}
 		.footer {
 			.info {
 				padding-left:5px;
@@ -412,6 +428,20 @@ body {
 			.product {
 				margin: 0 auto 40px;
 				width: 100%;
+			}
+		}
+		.content {
+			.product-body {
+				.photo {
+					.thumbs {
+						a {
+							padding-right:12px;
+						}
+					}
+				}
+				.description {
+
+				}
 			}
 		}
 		.footer {
