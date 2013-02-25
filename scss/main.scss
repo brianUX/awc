@@ -196,7 +196,7 @@ body {
 						float: left;
 					}
 					a.active {
-						border-bottom:2px solid #929292;
+						border-bottom:1px solid #929292;
 					}
 					a:hover {
 						cursor:pointer;
@@ -346,19 +346,23 @@ body {
 	
 	.app {
 		width:99%;
-		.header .title {
+		.header div.title {
 			a {
-				margin-top:-12px;
+				margin-top:0;
+				img.logo-img {
+					width: 80px;
+					height: 80px;
+				}
 			}
 			h1 {
-				font-size:32px;
+				font-size:28px;
 			}
 			h3 {
 				font-size:18px;
 			}
 		}
 		.header .social {
-			bottom:-30px;
+			display:none;
 		}
 		.slides {
 			margin-top:15px;
@@ -375,7 +379,10 @@ body {
 				.photo {
 					.thumbs {
 						a {
-							padding-right:12px;
+							margin-left:8px;
+							&:first-child {
+								margin-left:0;
+							}
 						}
 					}
 				}
@@ -401,33 +408,36 @@ body {
 	
 	.app {
 		width:100%;
-		.header .title {
-			a {
-				margin-top:-12px;
+		.header {
+			margin-top:20px;
+			.title {
+				a {
+					margin-top:-12px;
+				}
+				h1 {
+					font-size:30px;
+				}
+				h3 {
+					display:none;
+				}
 			}
-			h1 {
-				font-size:30px;
-			}
-			h3 {
+			.header .social {
 				display:none;
 			}
-		}
-		.header .social {
-			display:none;
-		}
-		.menu {
-			.nav a {
-				font-size:15px;
+			.menu {
+				.nav a {
+					font-size:15px;
+				}
 			}
-		}
-		.slides {
-			margin-top:15px;
-		}
-		.products {
-			margin:40px 0 15px;
-			.product {
-				margin: 0 auto 40px;
-				width: 100%;
+			.slides {
+				margin-top:15px;
+			}
+			.products {
+				margin:40px 0 15px;
+				.product {
+					margin: 0 auto 40px;
+					width: 100%;
+				}
 			}
 		}
 		.content {
@@ -435,7 +445,10 @@ body {
 				.photo {
 					.thumbs {
 						a {
-							padding-right:12px;
+							margin-left:7px;
+							&:first-child {
+								margin-left:0;
+							}
 						}
 					}
 				}
