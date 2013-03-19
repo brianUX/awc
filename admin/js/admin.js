@@ -473,6 +473,8 @@ $(function(){
 					photo: product.photo,
 					photo2: product.photo2,
 					photo3: product.photo3,
+					photo4: product.photo4,
+					photo5: product.photo5,
 					id: product.id
 				};
 			  	$(this.el).html(this.template(data));
@@ -500,6 +502,8 @@ $(function(){
 				var photo = $("img#photo").attr('src');
 				var photo2 = $("img#photo2").attr('src');
 				var photo3 = $("img#photo3").attr('src');
+				var photo4 = $("img#photo4").attr('src');
+				var photo5 = $("img#photo5").attr('src');
 				//save new values
 				var product = new Parse.Query(Product);
 				product.get(self.id, {
@@ -510,6 +514,8 @@ $(function(){
 						product.set("photo", photo);
 						product.set("photo2", photo2);
 						product.set("photo3", photo3);
+						product.set("photo4", photo4);
+						product.set("photo5", photo5);
 						product.save(null, {
 							success: function() {
 		 						$(".alert-success").show();
