@@ -173,7 +173,7 @@ body {
 			//color:#4a4a4a;
 			font-size: 14px;
 			position: absolute;
-			top: -5px;
+			top: -15px;
 			left: 0;
 			&:active {
 				top:-6px;
@@ -183,6 +183,7 @@ body {
 			//padding-top:10px;
 		}
 		.product-body {
+			margin-top:20px;
 			.photo {
 				padding-bottom:20px;
 				max-width: 650px;
