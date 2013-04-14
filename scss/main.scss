@@ -185,6 +185,7 @@ body {
 		.product-body {
 			.photo {
 				padding-bottom:20px;
+				max-width: 650px;
 				img {
 					width:100%;
 				}
@@ -209,7 +210,9 @@ body {
 				}
 			}
 			.description {
-				
+				h1 {
+					margin-top:0;
+				}
 			}
 		}
 		.error {

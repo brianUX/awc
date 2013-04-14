@@ -122,9 +122,8 @@
 			
 			<script type="text/template" id="product-template">
 				<a href="#/" class="back toggle">&larr; Back</a>
-				<h1><%= title %></h1>
 				<div class="product-body row-fluid">
-					<div class="photo span6 row-fluid">
+					<div class="photo span8 row-fluid">
 						<div class="main span12">
 							<img id="main" src='<%= photo %>' alt=''>
 						</div>
@@ -136,7 +135,8 @@
 							<a class=""><img src='<%= photo5 %>' alt=''></a>
 						</div>
 					</div>
-					<div class="description span6">
+					<div class="description span4">
+						<h1><%= title %></h1>
 						<%= body %>
 					</div>
 				</div>
