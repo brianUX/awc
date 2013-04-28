@@ -51,7 +51,7 @@ body {
 				height: 16px;
 				width: 16px;
 				float:right;
-				margin-left:3px;
+				margin-left:6px;
 				@include border-radius(12px);
 				&:hover {
 					background:#eaeaea;
@@ -261,7 +261,7 @@ body {
 					height: 16px;
 					width: 16px;
 					float:right;
-					margin-left:3px;
+					margin-left:6px;
 					@include border-radius(12px);
 					&:hover {
 						background:#eaeaea;
