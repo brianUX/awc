@@ -75,10 +75,11 @@ $(function(){
 		//app view
 		AppView = Parse.View.extend({
 			initialize: function() {
-				_.bindAll(this, "getSettings", "renderSettings", "getPages", "renderPages");
+				_.bindAll(this, "getSettings", "renderSettings", "getPages", "renderPages", "getProducts", "renderProducts");
 				this.render();
 				this.getSettings();
 				this.getPages();
+				this.getProducts();
 		    },
 			render: function() {
 				new LoadingView();
@@ -133,6 +134,35 @@ $(function(){
 					};
 					$('.main-nav').append(_.template($('#menu-item').html())(data));
 					$('.footer-nav').append(_.template($('#menu-item').html())(data));
+				});
+			},
+			getProducts: function() {
+				var self = this;
+				var products = new Products();
+				products.comparator = function(object) {
+				  return object.get("order");
+				};
+				products.fetch({
+					success: function(products) {
+						self.renderProducts(products.models);
+					},
+					error: function(collection, error) {
+					    new ErrorView({
+							title: "Error",
+							message: "Please Try Again"
+						});
+					}
+				});
+			},
+			renderProducts: function(products) {
+				var self = this;
+				products.forEach(function(product) {
+					var data = {
+						title: product.attributes.title,
+						url: product.attributes.url
+					};
+					$('.wood').append(_.template($('#menu-item').html())(data));
+					// $('.footer-nav').append(_.template($('#product-item').html())(data));
 				});
 			}
 		});	

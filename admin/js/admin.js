@@ -499,11 +499,17 @@ $(function(){
 				var title = $('input#title').val();
 				var url = $('input#url').val();
 				var body = $('textarea#body').val();
-				var photo = $("img#photo").attr('src');
-				var photo2 = $("img#photo2").attr('src');
-				var photo3 = $("img#photo3").attr('src');
-				var photo4 = $("img#photo4").attr('src');
-				var photo5 = $("img#photo5").attr('src');
+				// var photo = $("img#photo").attr('src');
+				// var photo2 = $("img#photo2").attr('src');
+				// var photo3 = $("img#photo3").attr('src');
+				// var photo4 = $("img#photo4").attr('src');
+				// var photo5 = $("img#photo5").attr('src');
+				var photo = $('input.photoOrder[value="1"]').parents('.product-photo').find('img.product').attr('src');
+				var photo2 = $('input.photoOrder[value="2"]').parents('.product-photo').find('img.product').attr('src');
+				var photo3 = $('input.photoOrder[value="3"]').parents('.product-photo').find('img.product').attr('src');
+				var photo4 = $('input.photoOrder[value="4"]').parents('.product-photo').find('img.product').attr('src');
+				var photo5 = $('input.photoOrder[value="5"]').parents('.product-photo').find('img.product').attr('src');
+				console.log(photo2);
 				//save new values
 				var product = new Parse.Query(Product);
 				product.get(self.id, {
@@ -548,7 +554,6 @@ $(function(){
 				var self = this;
 				var serverUrl = 'https://api.parse.com/1/files/' + this.file.name;
 				var id = el.attr('id');
-				console.log()
 				//send file
 				$.ajax({
 					type: "POST",
