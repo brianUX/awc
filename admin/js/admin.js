@@ -475,7 +475,8 @@ $(function(){
 					photo3: product.photo3,
 					photo4: product.photo4,
 					photo5: product.photo5,
-					id: product.id
+					id: product.id,
+					price: product.price
 				};
 			  	$(this.el).html(this.template(data));
 				$('textarea:visible').wysihtml5({
@@ -499,6 +500,7 @@ $(function(){
 				var title = $('input#title').val();
 				var url = $('input#url').val();
 				var body = $('textarea#body').val();
+				var price = $('input#price').val();
 				$('.product-photo').each(function(){
 					var order = $(this).find('input.photoOrder').val();
 					var order = parseInt(order);
@@ -527,6 +529,7 @@ $(function(){
 						product.set("photo3", photo3);
 						product.set("photo4", photo4);
 						product.set("photo5", photo5);
+						product.set("price", price);
 						product.save(null, {
 							success: function() {
 		 						$(".alert-success").show();

@@ -398,7 +398,8 @@ $(function(){
 					photo3: product.photo3,
 					photo4: product.photo4,
 					photo5: product.photo5,
-					body: product.body
+					body: product.body,
+					price: product.price
 				};
 			  	$(this.el).html(this.template(data));
 			},
