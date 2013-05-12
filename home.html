@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>The American Wood Company</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/loader.css">
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+	
+		<script type="text/template" id="loading-template">
+			<div class="loading hide">
+				<div class="logo">
+					<img src="img/logo.png" class="logo-img" alt="the american wood company">
+				</div>
+				<p>Loading</p>
+			</div>
+		</script>
+		<div class="loading-dad"></div>
+
+		<div class="app container-fluid hide">
+		
+			<script type="text/template" id="header-template">
+				<div class="header row-fluid">
+					<div class="title span10">
+						<a href="#/"><img src="img/logo.png" class="logo-img" alt="the american wood company"></a>
+						<h1><%= title %></h1>
+						<h3><%= tagline %></h3>
+					</div>
+					<div class="social span2">
+						<% if(tumblr) { %>
+							<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+						<% } %>	
+						<% if(pinterest) { %>
+							<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+						<% } %>	
+						<% if(twitter) { %>
+							<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+						<% } %>	
+						<% if(facebook) { %>
+							<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>
+						<% } %>				
+					</div>
+				</div>
+			</script>
+			<div class="header-dad"></div>
+			
+			<script type="text/template" id="menu-item">
+				<li><a href="#/<%= url %>"><%= title %></a></li>
+			</script>
+			<div class="menu row-fluid">
+				<ul class="nav nav-tabs toggle main-nav">
+					<li>
+						<a class="thewood" href="#/">
+							The Wood
+							<ul class="wood"></ul>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="content row-fluid"></div>
+			
+			<div class="footer row-fluid">
+				<div class="menu-bottom span9">
+					<ul class="nav nav-tabs footer-nav"></ul>
+				</div>
+				<div class="info span3 footer-info"></div>
+			</div>
+			
+		</div>
+
+		
+		<!-- start content views -->
+		
+			<script type="text/template" id="home-slider-template">
+				<div class="slides row-fluid">
+					<div class="carousel slide">
+						<div class="carousel-inner">
+							<%  slides.forEach(function(slide) { %>
+								<div class="item">
+									<img src="<%= slide.attributes.photo %>" alt="">
+								</div>
+							<% }); %>
+						</div>
+					</div>
+					<div class="circles">
+						<%  slides.forEach(function(slide) { %>
+							<span></span>
+						<% }); %>
+					</div>
+				</div>
+			</script>
+			
+			<script type="text/template" id="home-products-template">
+				<div class="products row-fluid">
+					<%  products.forEach(function(product) { %>
+						<div class="product span4">
+							<a href="#/<%= product.attributes.url %>"><img src="<%= product.attributes.photo %>" alt=""></a>
+							<h4><a href="#/<%= product.attributes.url %>"><%= product.attributes.title %></a></h4>
+						</div>
+					<% }); %>
+				</div>
+			</script>
+			
+			<script type="text/template" id="page-template">
+			<!-- <a href="#/" class="back toggle">&larr; Back</a> -->
+			<div class="top-photo row-fluid">
+				<div class="span12">
+					<img src="<%= photo %>">
+				</div>
+			</div>
+			<h1><%= title %></h1>
+			<div class="product-body">
+				<div class="description">
+					<%= body %>
+				</div>
+			</div>
+			</script>
+			
+			<script type="text/template" id="product-template">
+				<div class="product-body row-fluid">
+					<div class="photo span8 row-fluid">
+						<div class="main span12">
+							<img id="main" src='<%= photo %>' alt=''>
+						</div>
+						<div class="thumbs span12 row-fluid">
+							<a class="active"><img src='<%= photo %>' alt=''></a>
+							<a class=""><img src='<%= photo2 %>' alt=''></a>
+							<a class=""><img src='<%= photo3 %>' alt=''></a>
+							<a class=""><img src='<%= photo4 %>' alt=''></a>
+							<a class=""><img src='<%= photo5 %>' alt=''></a>
+						</div>
+					</div>
+					<div class="description span4">
+						<h1><%= title %></h1>
+						<%= body %>
+					</div>
+				</div>
+			</script>
+			
+			<script type="text/template" id="slide-template">
+				<div class="item active">
+					<img src="<%= src %>" alt="">
+				</div>
+			</script>
+			
+			<script type="text/template" id="error-template">
+				<div class="error">
+					<h1><%= title %></h1>
+					<p><%= message %><p>
+				</div>
+			</script>
+			
+			<script type="text/template" id="footer-template">
+				<address>
+					 <%= address %>
+				</address>
+				<address>
+					e: <a href="mailto:<%= email %>"><%= email %></a><br>
+					<% if(phone) { %>
+						t: <%= phone %>
+					<% } %>
+				</address>
+				<div class="social">
+					<% if(tumblr) { %>
+						<a target="_blank" href="<%= tumblr %>" rel="tooltip" data-original-title="Tumblr"><img src="img/tu.png"></a>
+					<% } %>	
+					<% if(pinterest) { %>
+						<a target="_blank" href="<%= pinterest %>" rel="tooltip" data-original-title="Pinterest"><img src="img/pi.png"></a>
+					<% } %>	
+					<% if(twitter) { %>
+						<a target="_blank" href="<%= twitter %>" rel="tooltip" data-original-title="Twitter"><img src="img/tw.png"></a>
+					<% } %>	
+					<% if(facebook) { %>
+						<a target="_blank" href="<%= facebook %>" rel="tooltip" data-original-title="Facebook"><img src="img/fb.png"></a>
+					<% } %>			
+				</div>
+			</script>
+			
+		
+		<!-- end content views -->
+	
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
+		<script src="http://www.parsecdn.com/js/parse-1.1.15.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+		<script src="js/tawc.js"></script>        
+		<script src="js/plugins.js"></script>
+
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+
+    </body>
+</html>
