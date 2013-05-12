@@ -1,0 +1,67 @@
+# -------------------------------------------------------------------
+# Backlift config.yml file. This file can be used to customize how 
+# your application is packaged when you run backlift push.
+# -------------------------------------------------------------------
+
+# compile: Backlift will select an appropriate compiler for each file 
+# that matches one of the patterns below. The file types that backlift 
+# recognizes are:
+#   *.jst        -> underscore templates (outputs .js files)
+#   *.handlebars -> handlebars templates (outputs .js files)
+#   *.less       -> lessc css compiler (outputs .css files)
+#   *.coffee     -> coffeescript compiler (outputs .js files)
+#
+# Uncomment this block to customize which files will be compiled:
+
+# compile:
+# - public/**/*.jst
+# - public/**/*.handlebars
+# - public/**/bootstrap*.less
+# - public/**/*.coffee
+
+
+# scripts: These javascript files will be packaged and linked in 
+# order. File paths should be specified relative to the project root.
+# They should not be compressed. The * will match any string and **
+# will match any folder.
+
+# scripts:
+# - public/libraries/scripts/jquery-1.7.2.js
+# - public/libraries/scripts/underscore-1.3.3.js
+# - public/libraries/scripts/backbone-0.9.2.js
+# - public/libraries/scripts/bootstrap-2.0.4.js
+# - public/libraries/scripts/handlebars.runtime-1.0.6.js
+# - public/libraries/scripts/backlift-pusher-helpers.js
+# - public/setup.js
+# - public/**/*.js
+
+
+# styles: These stylesheets will be packaged and linked in order, 
+# similar to scripts.
+
+# styles:
+# - public/libraries/styles/bootstrap-2.0.4.css
+# - public/**/*.css
+
+
+# optimize: The optimize flag controls whether or not backlift 
+# concatenates and minifies .js and .css files. The optimizer is slow
+# and produces obfuscated code that cannot be easily debugged. For 
+# these reasons, optimization should be disabled during development
+
+# optimize: no
+
+
+# autoroute: the automatic routing feature is useful for single-page 
+# websites that implement their own javascript routing. If autoroute
+# is set to 'yes', all requests to URLs that don't match a file or API 
+# endpoint will be routed to the index.html file. Default is 'no'.
+
+# autoroute: no
+
+# includes: Files and folders to be included when app is installed.
+# These files reside only in the backlift server and thus don't clutter
+# your folder on Dropbox.
+
+include:
+  admin: github.com/backlift/backlift-admin
