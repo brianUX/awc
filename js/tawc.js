@@ -254,6 +254,7 @@ $(function(){
 				$('.content').html(inner);
 				this.loadSlides();
 				this.loadProducts();
+				new TrackPageView();
 			},
 			loadSlides: function() {
 				var self = this;
@@ -355,6 +356,7 @@ $(function(){
 						});
 					}
 				});
+				new TrackPageView();
 			},
 			render: function(page) {
 			  	var data = {
@@ -389,6 +391,7 @@ $(function(){
 						});
 					}
 				});
+				new TrackPageView();
 			},
 			render: function(product) {
 			  	var data = {
@@ -437,6 +440,13 @@ $(function(){
 			  	$(this.el).html(this.template(data));
 			}
 		});
+		
+		//page view
+		TrackPageView = Parse.View.extend({
+			initialize: function() {
+				_gaq.push(['_trackPageview', window.location.href]);
+			}
+		})
 		
 	
 	//router
